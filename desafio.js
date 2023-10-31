@@ -101,7 +101,7 @@ class ProductManager {
             product.code = 'C' + 1
         } else {
             product.id = this.products[this.products.length - 1].id + 1
-            product.code = 'C' +this.products[this.products.length - 1].id + 1
+            product.code = 'C' + (this.products[this.products.length - 1].id + 1 )
         }
 
         this.products.push(product)
@@ -131,14 +131,14 @@ class Productos {
 
 const manejadorDeEventos = new ProductManager()
 
-console.log('Probando evento product manager')
+console.log('Productos...')
 manejadorDeEventos.addProduct(new Productos('pc', 'pcx100', 200, 'imgurl', 9))
 manejadorDeEventos.addProduct(new Productos('p5c', 'pcx1400', 20, 'imgur3l', 5))
 manejadorDeEventos.addProduct(new Productos('p56c', 'pcx14050', 220, 'imgur53l', 6))
 
-
 console.log(manejadorDeEventos.getProducts())
 
+console.log('producto seleccionado', manejadorDeEventos.getProductById(3))
 
 
 
