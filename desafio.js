@@ -1,110 +1,60 @@
-/* class TicketManager {
-
-    #precioBaseDeGanancia = 0.15
-
-    constructor () {
-        this.eventos = []
-    }
-
-    getEventos () {
-        return this.eventos
-    }
-
-    agregarEvento(evento) {
-        evento.precio += evento.precio * this.#precioBaseDeGanancia
-
-        if(this.eventos.length === 0){
-            evento.id = 1
-        } else {
-            evento.id = this.eventos[this.eventos.length - 1].id + 1 
-        }
-
-        this.eventos.push(evento)
-    }
-
-    agregarUsuario(idEvento, idUser) {
-        const evento = this.eventos.find((evento) => evento.id === idEvento )
-
-        if(!evento){
-            return "No existe el evento"
-        }
-
-        if(evento.participantes.includes(idUser)){
-            return "El usuario ya existe"
-        } else {
-            evento.participantes.push(idUser)
-        }
-    }
-
-    PonerEventiEnGira(idEvento, nuevaLocalidad, nuevaFecha){
-        const evento = this.eventos.find(evento => evento.id === idEvento)
-
-        if(!evento) {
-            return "El evento no existe"
-        }
-
-        const newEvento = {
-            ...evento,
-            lugar: nuevaLocalidad,
-            fecha: nuevaFecha,
-            id: this.eventos[this.eventos.length - 1].id + 1,
-            participantes: []
-        }
-
-        this.eventos.push(newEvento)
-    }
-}
- 
-class Evento {
-    constructor(nombre, lugar, precio, capacidad = 50, fecha = new Date().toLocaleDateString()) {
-        this.nombre = nombre;
-        this.lugar = lugar;
-        this.precio = precio;
-        this.capacidad = capacidad;
-        this.fecha = fecha;
-        this.participantes = [] 
-    }
-} */
-
-/* const manejadorDeEventos = new TicketManager()
-
-console.log('agregando Evento coder 1 para Argentina, precio: 200, para 60 participantes')
-manejadorDeEventos.agregarEvento(new Evento('Evento coder 1', 'Argentina' , 200, 60))
-
-console.log('agregando al Evento con id 1 la participacion del usuario con id 2')
-manejadorDeEventos.agregarUsuario(1, 2,3)
-
-console.log('creado una copia vacia del evento 1 pero en mexico y para el 2024')
-manejadorDeEventos.PonerEventiEnGira(1 , 'Mexico', '30/11/2024')
-
-console.log(manejadorDeEventos.getEventos())
-
- */
+const fs = require("fs")
 
 class ProductManager {
 
-    constructor() {
-         this.products = []
-    }
-
-    getProducts(){
-        return this.products;
-    }
-
-    addProduct(product){
-
-       
-        
-
-        if(this.products.length === 0){
-            product.id = 1
-            product.code = 'C' + 1
-        } else {
-            product.id = this.products[this.products.length - 1].id + 1
-            product.code = 'C' + (this.products[this.products.length - 1].id + 1 )
+    constructor(path) {
+        this.path = path;
+        this.id = 0;
+        if(fs.existsSync(path)){
+            try{
+                const productos = fs.readFileSync(path, "utf-8");
+                this.products = JSON.parse(productos)
+            } catch ( error ) {
+                this.products = []
+            }
+        }else {
+            this.products = []
         }
+    }
 
-        this.products.push(product)
+    async saveFile() {
+        try {
+            await fs.promises.writeFile(
+                this.path,
+                JSON.stringify(this.products, null, "\t")
+            );
+            return true
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+
+    mostrarProductos() {
+        console.log(this.path)
+        return this.path; 
+    }
+
+    async addProduct(product){
+
+        const productos = this.products.find((prod) => prod.code === product.code);
+
+    if (productos) {
+      console.log("[ERROR] Team code already exist");
+    } else {
+      const newProduct = { ...product, id: this.products.length + 1 };
+      this.products.push(newProduct);
+
+        } 
+
+        const respuesta = await this.saveFile(this.products);
+
+        if(respuesta){
+            console.log("Producto creado")
+            
+        } else{
+            console.log("Hubo un error al crear el producto")
+        }
     }
 
     getProductById(id){
@@ -117,29 +67,80 @@ class ProductManager {
 
         this.products.push(id)
     }
-}
 
-class Productos {
-    constructor( title, description, price, thumbnail, stock) {
-        this.title = title || 'campo obligatorio',
-        this.description = description|| 'campo obligatorio',
-        this.price = price || 'campo obligatorio',
-        this.thumbnail = thumbnail || 'campo obligatorio',
-        this.stock = stock || 'campo obligatorio'
+   async updateProduct(id,title,description,price,thumbnail,stock,code){
+        const productEdit = this.products.find((edit) => edit.id === id);
+
+    if (!productEdit) {
+      return "El evento no existe";
+    }
+
+    const newProduct = {
+      ...Productos,
+      title : title ,
+        description : description,
+        price : price ,
+        thumbnail : thumbnail ,
+        stock : stock ,
+        code : code,
+        id: this.products[this.products.length - 1].id + 1,
+    };
+
+    this.saveFile(newProduct);
+    }
+
+    async deleteProduct(id) {
+
+        const getId = this.products.findIndex((getId) => {
+            return getId.id === id})
+
+        if(getId) {
+            this.products.splice(getId, 1)
+
+         await this.saveFile()
+        } else {
+            console.log("no esta el id")
+        }
     }
 }
 
-const manejadorDeEventos = new ProductManager()
+class Productos {
+    constructor( title, description, price, thumbnail, stock, code) {
+        this.title = title ,
+        this.description = description,
+        this.price = price ,
+        this.thumbnail = thumbnail ,
+        this.stock = stock ,
+        this.code = code
+    }
+}
 
-console.log('Productos...')
-manejadorDeEventos.addProduct(new Productos('pc', 'pcx100', 200, 'imgurl', 9))
-manejadorDeEventos.addProduct(new Productos('p5c', 'pcx1400', 20, 'imgur3l', 5))
-manejadorDeEventos.addProduct(new Productos('p56c', 'pcx14050', 220, 'imgur53l', 6))
+const cargarProduct = async () => {
 
-console.log(manejadorDeEventos.getProducts())
+    const manejadorDeProductos = new ProductManager("./Productos.json")
 
-console.log('producto seleccionado', manejadorDeEventos.getProductById(3))
+    await manejadorDeProductos.addProduct(new Productos('pc', 'pcx100', 200, 'imgurl', 9, 'AAB1'))
+    await manejadorDeProductos.addProduct(new Productos('p5c', 'pcx1400', 20, 'imgur3l', 5, 'AAB3'))
 
-
+    manejadorDeProductos.mostrarProductos()
 
 
+    await manejadorDeProductos.addProduct(new Productos('pc', 'pcx100', 200, 'imgurl', 9, 'AAB14'))
+    await manejadorDeProductos.addProduct(new Productos('p56c', 'pcx14050', 220, 'imgur53l', 6, 'AAB2'))
+
+    manejadorDeProductos.mostrarProductos()
+    
+    await manejadorDeProductos.addProduct(new Productos('pc', 'pcx100', 200, 'imgurl', 9, 'AAB1544'))
+    await manejadorDeProductos.addProduct(new Productos('p56c', 'pcx14050', 220, 'imgur53l', 6, 'AAB23'))
+    
+    await manejadorDeProductos.updateProduct( 6,'p56c4', 'pc3x14050', 2520, 'im3g4ur53l', 65, 'AA534B23' )
+
+    manejadorDeProductos.mostrarProductos()
+
+    await manejadorDeProductos.deleteProduct(3)
+    await manejadorDeProductos.deleteProduct(2)
+
+    manejadorDeProductos.mostrarProductos()
+}
+
+cargarProduct()

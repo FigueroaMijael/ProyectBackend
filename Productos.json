@@ -1,0 +1,38 @@
+[
+	{
+		"title": "pc",
+		"description": "pcx100",
+		"price": 200,
+		"thumbnail": "imgurl",
+		"stock": 9,
+		"code": "AAB1",
+		"id": 1
+	},
+	{
+		"title": "p56c",
+		"description": "pcx14050",
+		"price": 220,
+		"thumbnail": "imgur53l",
+		"stock": 6,
+		"code": "AAB2",
+		"id": 4
+	},
+	{
+		"title": "pc",
+		"description": "pcx100",
+		"price": 200,
+		"thumbnail": "imgurl",
+		"stock": 9,
+		"code": "AAB1544",
+		"id": 5
+	},
+	{
+		"title": "p56c",
+		"description": "pcx14050",
+		"price": 220,
+		"thumbnail": "imgur53l",
+		"stock": 6,
+		"code": "AAB23",
+		"id": 6
+	}
+]
