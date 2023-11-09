@@ -1,38 +1,65 @@
 [
 	{
-		"title": "pc",
-		"description": "pcx100",
-		"price": 200,
-		"thumbnail": "imgurl",
-		"stock": 9,
+		"title": "p3c",
+		"description": "pcxht100",
+		"price": 2060,
+		"thumbnail": "im356gurl",
+		"stock": 95,
 		"code": "AAB1",
 		"id": 1
 	},
 	{
-		"title": "p56c",
-		"description": "pcx14050",
-		"price": 220,
-		"thumbnail": "imgur53l",
-		"stock": 6,
-		"code": "AAB2",
+		"title": "Nuevo Título",
+		"description": "Nueva Descripción",
+		"price": 300,
+		"thumbnail": "nueva_imagen.jpg",
+		"stock": 50,
+		"code": "NUEVOCODIGO",
 		"id": 4
 	},
 	{
-		"title": "pc",
-		"description": "pcx100",
-		"price": 200,
-		"thumbnail": "imgurl",
-		"stock": 9,
+		"title": "p234c",
+		"description": "pc6756x100",
+		"price": 2300,
+		"thumbnail": "imgur56l",
+		"stock": 79,
 		"code": "AAB1544",
 		"id": 5
 	},
 	{
-		"title": "p56c",
-		"description": "pcx14050",
-		"price": 220,
-		"thumbnail": "imgur53l",
-		"stock": 6,
+		"title": "p52456245626c",
+		"description": "pcx140652465650",
+		"price": 2520,
+		"thumbnail": "img56ur53l",
+		"stock": 76,
 		"code": "AAB23",
 		"id": 6
+	},
+	{
+		"title": "p556c",
+		"description": "pcx731400",
+		"price": 260,
+		"thumbnail": "imgu7356r3l",
+		"stock": 55,
+		"code": "AAB3",
+		"id": 7
+	},
+	{
+		"title": "p7c",
+		"description": "pcx105630",
+		"price": 2600,
+		"thumbnail": "im65gurl",
+		"stock": 96,
+		"code": "AAB14",
+		"id": 8
+	},
+	{
+		"title": "p566c",
+		"description": "pc756x14050",
+		"price": 220,
+		"thumbnail": "imgur53756l",
+		"stock": 67,
+		"code": "AAB2",
+		"id": 9
 	}
 ]

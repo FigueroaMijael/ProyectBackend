@@ -4,7 +4,6 @@ class ProductManager {
 
     constructor(path) {
         this.path = path;
-        this.id = 0;
         if(fs.existsSync(path)){
             try{
                 const productos = fs.readFileSync(path, "utf-8");
@@ -31,30 +30,34 @@ class ProductManager {
     }
 
     mostrarProductos() {
-        console.log(this.path)
         return this.path; 
     }
 
     async addProduct(product){
+        let maxId = 0;
+        for (const prod of this.products) {
+            if (prod.id > maxId) {
+                maxId = prod.id;
+            }
+        }
+        product.id = maxId + 1;
 
         const productos = this.products.find((prod) => prod.code === product.code);
 
     if (productos) {
-      console.log("[ERROR] Team code already exist");
-    } else {
-      const newProduct = { ...product, id: this.products.length + 1 };
-      this.products.push(newProduct);
+        return console.log("[ERROR] Team code already exist");
+    }
 
-        } 
+    this.products.push(product);
 
-        const respuesta = await this.saveFile(this.products);
+        const respuesta = await this.saveFile();
 
-        if(respuesta){
-            console.log("Producto creado")
-            
-        } else{
-            console.log("Hubo un error al crear el producto")
+        if (respuesta) {
+            console.log("Producto creado");
+        } else {
+            console.log("Hubo un error al crear el producto");
         }
+
     }
 
     getProductById(id){
@@ -68,38 +71,45 @@ class ProductManager {
         this.products.push(id)
     }
 
-   async updateProduct(id,title,description,price,thumbnail,stock,code){
-        const productEdit = this.products.find((edit) => edit.id === id);
 
-    if (!productEdit) {
-      return "El evento no existe";
+   async updateProduct(id,productData){
+    const productIndex = this.products.findIndex((product) => product.id === id);
+
+    if (productIndex === -1) {
+        console.log("El producto no existe");
+        return;
     }
 
-    const newProduct = {
-      ...Productos,
-      title : title ,
-        description : description,
-        price : price ,
-        thumbnail : thumbnail ,
-        stock : stock ,
-        code : code,
-        id: this.products[this.products.length - 1].id + 1,
+    // Actualiza el producto con los nuevos datos
+    this.products[productIndex] = { ...this.products[productIndex], ...productData };
+
+    const success = await this.saveFile();
+
+    if (success) {
+        console.log("El producto se ha actualizado con éxito");
+    } else {
+        console.log("Hubo un error al actualizar el producto");
+    }
     };
 
-    this.saveFile(newProduct);
-    }
 
     async deleteProduct(id) {
 
-        const getId = this.products.findIndex((getId) => {
-            return getId.id === id})
+        const productIndex = this.products.findIndex((prod) => prod.id === id);
 
-        if(getId) {
-            this.products.splice(getId, 1)
+        if (productIndex === -1) {
+            console.log("El producto no existe");
+            return;
+        }
 
-         await this.saveFile()
+        this.products.splice(productIndex, 1);
+
+        const success = await this.saveFile();
+
+        if (success) {
+            console.log("Producto eliminado con éxito");
         } else {
-            console.log("no esta el id")
+            console.log("Hubo un error al eliminar el producto");
         }
     }
 }
@@ -119,21 +129,29 @@ const cargarProduct = async () => {
 
     const manejadorDeProductos = new ProductManager("./Productos.json")
 
-    await manejadorDeProductos.addProduct(new Productos('pc', 'pcx100', 200, 'imgurl', 9, 'AAB1'))
-    await manejadorDeProductos.addProduct(new Productos('p5c', 'pcx1400', 20, 'imgur3l', 5, 'AAB3'))
+    await manejadorDeProductos.addProduct(new Productos('p3c', 'pcxht100', 2060, 'im356gurl', 95, 'AAB1'))
+    await manejadorDeProductos.addProduct(new Productos('p556c', 'pcx731400', 260, 'imgu7356r3l', 55, 'AAB3'))
 
     manejadorDeProductos.mostrarProductos()
 
 
-    await manejadorDeProductos.addProduct(new Productos('pc', 'pcx100', 200, 'imgurl', 9, 'AAB14'))
-    await manejadorDeProductos.addProduct(new Productos('p56c', 'pcx14050', 220, 'imgur53l', 6, 'AAB2'))
+    await manejadorDeProductos.addProduct(new Productos('p7c', 'pcx105630', 2600, 'im65gurl', 96, 'AAB14'))
+    await manejadorDeProductos.addProduct(new Productos('p566c', 'pc756x14050', 220, 'imgur53756l', 67, 'AAB2'))
 
     manejadorDeProductos.mostrarProductos()
     
-    await manejadorDeProductos.addProduct(new Productos('pc', 'pcx100', 200, 'imgurl', 9, 'AAB1544'))
-    await manejadorDeProductos.addProduct(new Productos('p56c', 'pcx14050', 220, 'imgur53l', 6, 'AAB23'))
+    await manejadorDeProductos.addProduct(new Productos('p234c', 'pc6756x100', 2300, 'imgur56l', 79, 'AAB1544'))
+    await manejadorDeProductos.addProduct(new Productos('p52456245626c', 'pcx140652465650', 2520, 'img56ur53l', 76, 'AAB23'))
     
-    await manejadorDeProductos.updateProduct( 6,'p56c4', 'pc3x14050', 2520, 'im3g4ur53l', 65, 'AA534B23' )
+    // Actualiza un producto existente por su ID
+    await manejadorDeProductos.updateProduct(4, {
+        title: 'Nuevo Título',
+        description: 'Nueva Descripción',
+        price: 300,
+        thumbnail: 'nueva_imagen.jpg',
+        stock: 50,
+        code: 'NUEVOCODIGO'
+    });
 
     manejadorDeProductos.mostrarProductos()
 
