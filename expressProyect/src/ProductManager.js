@@ -1,4 +1,4 @@
-const fs = require("fs")
+import fs from 'fs'
 
 class ProductManager {
 
@@ -129,22 +129,25 @@ const cargarProduct = async () => {
 
     const manejadorDeProductos = new ProductManager("./Productos.json")
 
-    await manejadorDeProductos.addProduct(new Productos('p3c', 'pcxht100', 2060, 'im356gurl', 95, 'AAB1'))
-    await manejadorDeProductos.addProduct(new Productos('p556c', 'pcx731400', 260, 'imgu7356r3l', 55, 'AAB3'))
+    await manejadorDeProductos.addProduct(new Productos('pc', 'pcxht100', 2060, 'images-url', 10, 'A1'))
+    await manejadorDeProductos.addProduct(new Productos('pc2000', 'pcx731400', 260, 'images-url', 9, 'AB2'))
+    await manejadorDeProductos.addProduct(new Productos('pc3000', 'pc6756x100', 2300, 'images-url', 8, 'ABC3'))
+    await manejadorDeProductos.addProduct(new Productos('ps1', 'pcx140652465650', 2520, 'images-url', 7, 'AAA1'))
+    await manejadorDeProductos.addProduct(new Productos('ps2', 'pc6756x100', 2300, 'images-url', 6, 'AAB2'))
+    await manejadorDeProductos.addProduct(new Productos('ps3', 'pcx140652465650', 2520, 'images-url', 5, 'AAC3'))
+    await manejadorDeProductos.addProduct(new Productos('ps4', 'pc6756x100', 2300, 'images-url', 4, 'ABB1'))
+    await manejadorDeProductos.addProduct(new Productos('ps5', 'pcx140652465650', 2520, 'images-url', 3, 'ABC2'))
+    await manejadorDeProductos.addProduct(new Productos('xbox', 'pcx105630', 2600, 'images-url', 2, 'ACA1'))
+    await manejadorDeProductos.addProduct(new Productos('xboc360', 'pc756x14050', 220, 'images-url', 1, 'ACB4'))
+
 
     manejadorDeProductos.mostrarProductos()
 
 
-    await manejadorDeProductos.addProduct(new Productos('p7c', 'pcx105630', 2600, 'im65gurl', 96, 'AAB14'))
-    await manejadorDeProductos.addProduct(new Productos('p566c', 'pc756x14050', 220, 'imgur53756l', 67, 'AAB2'))
 
-    manejadorDeProductos.mostrarProductos()
-    
-    await manejadorDeProductos.addProduct(new Productos('p234c', 'pc6756x100', 2300, 'imgur56l', 79, 'AAB1544'))
-    await manejadorDeProductos.addProduct(new Productos('p52456245626c', 'pcx140652465650', 2520, 'img56ur53l', 76, 'AAB23'))
     
     // Actualiza un producto existente por su ID
-    await manejadorDeProductos.updateProduct(4, {
+/*     await manejadorDeProductos.updateProduct(4, {
         title: 'Nuevo Título',
         description: 'Nueva Descripción',
         price: 300,
@@ -158,7 +161,9 @@ const cargarProduct = async () => {
     await manejadorDeProductos.deleteProduct(3)
     await manejadorDeProductos.deleteProduct(2)
 
-    manejadorDeProductos.mostrarProductos()
+    manejadorDeProductos.mostrarProductos() */
 }
 
 cargarProduct()
+
+export default ProductManager
