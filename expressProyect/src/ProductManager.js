@@ -30,7 +30,7 @@ class ProductManager {
     }
 
     mostrarProductos() {
-        return this.path; 
+        return this.products; 
     }
 
     async addProduct(product){

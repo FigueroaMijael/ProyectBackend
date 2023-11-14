@@ -1,23 +1,44 @@
+import express from 'express';
 import ProductManager from './ProductManager.js';
-import express from 'express'
-const app = express()
-const PORT = 8081
 
-const manager = new ProductManager('./Productos.json')
+const app = express();
+const PORT = 8081;
+const manager = new ProductManager('./Productos.json');
 
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/productos', async (req, res) => {
+    const { limit } = req.query;
 
-    const products = await manager.products;
+    const products = await manager.mostrarProductos();
 
-    console.log(products)
-
-    if(products) {
-        res.json(products)
+    if (limit) {
+        const limitProduct = products.slice(0, limit);
+        return res.json(limitProduct);
     }
 
-    res.json({error : "Product not found"})
-})
+    res.json(products);
+});
 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
+app.get('/', (req, res) => {
+    res.send('Bienvenido reyyy!');
+});
+
+app.get('/producto', async (req, res) => {
+    const { id } = req.query;
+
+    if (id) {
+        const producto = await manager.mostrarProductos();
+        const productFilter = producto.find((prod) => prod.id === Number(id));
+
+        if (productFilter) {
+            return res.json(productFilter);
+        } else {
+            return res.json({ error: 'Product not found' });
+        }
+    }
+
+    res.json({ error: 'Invalid request. Please provide a valid product id.' });
+});
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
