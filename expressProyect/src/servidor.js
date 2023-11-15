@@ -38,7 +38,7 @@ app.get('/producto', async (req, res) => {
         }
     }
 
-    res.json({ error: 'Invalid request. Please provide a valid product id.' });
+    res.json({ error: 'El id del producto no existe' });
 });
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
