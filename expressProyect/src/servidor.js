@@ -21,10 +21,10 @@ app.get('/productos', async (req, res) => {
 
 app.get('/', (req, res) => {
     res.send(
-        '📎 📎 📎Bienvenido!📎 📎 📎  🔷 Ver listado de productos ➡️ <a href="http://localhost:8081/productos"> Productos </a>🔷  🔷Ver lista de 3 productos ➡️ <a href="http://localhost:8081/productos/?limit=3"> Ver </a>🔷   🔷Ver lista de 7 productos ➡️ <a href="http://localhost:8081/productos/?limit=7"> Ver </a>🔷   🔷Ver solo el productos con id 6 ➡️ <a href="http://localhost:8081/producto/?id=6"> Ver </a>🔷    🔷Ver solo el productos con id 1 ➡️ <a href="http://localhost:8081/producto/?id=1"> Ver </a>🔷');
+        '📎 📎 📎Bienvenido!📎 📎 📎  🔷 Ver listado de productos ➡️ <a href="http://localhost:8081/productos"> Productos </a>🔷  🔷Ver lista de 3 productos ➡️ <a href="http://localhost:8081/productos/?limit=3"> Ver </a>🔷   🔷Ver lista de 7 productos ➡️ <a href="http://localhost:8081/productos/?limit=7"> Ver </a>🔷   🔷Ver solo el productos con id 6 ➡️ <a href="http://localhost:8081/producto/:6"> Ver </a>🔷    🔷Ver solo el productos con id 1 ➡️ <a href="http://localhost:8081/producto/:1"> Ver </a>🔷');
 });
 
-app.get('/productos', async (req, res) => {
+app.get('/productos/:id', async (req, res) => {
     const { id } = req.params;
     const producto = await manager.mostrarProductos();
 
